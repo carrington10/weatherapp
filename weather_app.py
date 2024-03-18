@@ -17,5 +17,13 @@ search_btn.pack();
 location_lnl = Label(app,text='Location',font=('bold',20))
 location_lnl.pack();
 
+image = Label(app,bitmap='');
+image.pack();
+
+temp_lbl = Label(app,text='tempature');
+temp_lbl.pack();
+
+weather_lbl = Label(app,text ='weather');
+weather_lbl.pack();
 
 app.mainloop();
