@@ -1,8 +1,34 @@
 from tkinter import *
+from configparser import ConfigParser
+import requests;
+url = 'https://api.openweathermap.org/data/2.5/weather?q={}&appid={}'
 
+config_file = 'config.ini'
+config = ConfigParser();
+config.read(config_file);
+apik = config['api_key']['key'];
+
+def get_weather(city):
+    result = requests.get(url.format(city,apik));
+    if result:
+        json = result.json();
+        cityN = json['name'];
+        country = json['sys']['country']
+        temp_kel = json['main']['temp']
+        temp_cel = temp_kel - 272.15
+        temp_far = (temp_kel - 273.15) * 9 / 5 + 32;
+        final = (cityN,country,temp_kel,temp_cel,temp_far)
+        print(final);
+        return final;
+
+
+    else:
+        return None;
 app = Tk();
 app.title("Weather App");
 app.geometry("700x350");
+
+get_weather('london');
 
 def search():
     pass;
@@ -20,10 +46,10 @@ location_lnl.pack();
 image = Label(app,bitmap='');
 image.pack();
 
-temp_lbl = Label(app,text='tempature');
+temp_lbl = Label(app,text='Tempature');
 temp_lbl.pack();
 
-weather_lbl = Label(app,text ='weather');
+weather_lbl = Label(app,text ='Weather');
 weather_lbl.pack();
 
 app.mainloop();
